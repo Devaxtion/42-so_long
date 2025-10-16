@@ -50,4 +50,12 @@ int		calculate_offset(int x, int y, int line_length, int bits_per_pixel);
 void	buffered_pixel_put(t_data *data, int x, int y, int color);
 void	print_square(t_data *data, int center_x, int center_y, int radius, int color);
 
+// Color Utils
+
+int	create_trgb(int t, int r, int g, int b);
+int	get_t(int trgb);
+int	get_r(int trgb);
+int	get_g(int trgb);
+int	get_b(int trgb);
+
 #endif

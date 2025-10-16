@@ -32,7 +32,7 @@ AR = ar rcs
 RM = rm -f
 
 # Files
-FILES = main utils
+FILES = main utils colors
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 OUT_FILE = so_long.out
 
