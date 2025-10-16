@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/15 15:40:42 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:54:38 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,26 @@
 // INT_MAX
 # include <limits.h>
 
+// MinilibX
+# include <mlx.h>
+
 // Libft
 # include "libft.h"
 # include "ft_printf.h"
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_data;
 
+// Utils
 
+int		calculate_offset(int x, int y, int line_length, int bits_per_pixel);
+void	buffered_pixel_put(t_data *data, int x, int y, int color);
+void	print_square(t_data *data, int center_x, int center_y, int radius, int color);
 
 #endif
