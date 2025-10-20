@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 11:54:19 by leramos-          #+#    #+#              #
-#    Updated: 2025/10/16 13:36:08 by leramos-         ###   ########.fr        #
+#    Updated: 2025/10/20 15:38:18 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ AR = ar rcs
 RM = rm -f
 
 # Files
-FILES = main utils colors
+FILES = main utils colors colors_utils hooks forms
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 OUT_FILE = so_long.out
 

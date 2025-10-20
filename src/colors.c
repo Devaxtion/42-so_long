@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:36:16 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/16 17:36:16 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:17:16 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,25 @@
 
 int	add_shade(double distance, int color)
 {
-	int	t;
-	int	r;
-	int	g;
-	int	b;
+	int		t;
+	int		r;
+	int		g;
+	int		b;
+	double	factor;
 
+	if (distance == 0)
+		return (color);
+	factor = 1 / distance;
+	if (factor > 1.0)
+		factor = 1.0;
 	t = get_t(color);
-	r = get_r(color) * distance;
-	g = get_g(color) * distance;
-	b = get_b(color) * distance;
+	r = get_r(color) * factor;
+	g = get_g(color) * factor;
+	b = get_b(color) * factor;
 	return (create_trgb(t, r, g, b));
 }
 
-void	get_opposite(int color)
+int	get_opposite(int color)
 {
 	int	t;
 	int	r;
