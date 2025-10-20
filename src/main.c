@@ -14,24 +14,27 @@
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
+	t_vars	vars;
 	t_data	img;
 	int		x;
 	int		y;
 
 	x = 1920;
 	y = 1080;
-	mlx = mlx_init();
+	vars.mlx = mlx_init();
 	
-	mlx_win = mlx_new_window(mlx, x, y, "Hello world!");
-	img.img = mlx_new_image(mlx, x, y);
+	vars.win = mlx_new_window(vars.mlx, x, y, "Hello world!");
+	img.img = mlx_new_image(vars.mlx, x, y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 
 	// buffered_pixel_put(&img, 5, 5, 0x00FF0000);
 	print_square(&img, 500, 500, 200, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+
+	mlx_hook(vars.win, 2, 1L<<0, key_handler, &vars);
+	mlx_hook(vars.win, 22, 1L<<17, resize_handler, &vars);
+	mlx_hook(vars.win, 17, 0, destroy_handler, &vars);
+	mlx_loop(vars.mlx);
 	
 	return (0);
 }

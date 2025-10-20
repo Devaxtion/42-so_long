@@ -35,6 +35,11 @@
 # include "libft.h"
 # include "ft_printf.h"
 
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+}			t_vars;
+
 typedef struct s_data
 {
 	void	*img;
@@ -43,6 +48,10 @@ typedef struct s_data
 	int		line_length;
 	int		endian;
 }			t_data;
+
+// Key Values
+
+#define K_ESC 53
 
 // Utils
 
@@ -57,5 +66,11 @@ int	get_t(int trgb);
 int	get_r(int trgb);
 int	get_g(int trgb);
 int	get_b(int trgb);
+
+// Hooks
+
+int	key_handler(int keycode, t_vars *vars);
+int	resize_handler(int event, t_vars *vars);
+int	destroy_handler(int event, t_vars *vars);
 
 #endif
