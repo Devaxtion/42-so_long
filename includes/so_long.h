@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/20 15:43:46 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:57:09 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,44 @@
 // malloc, free, exit
 # include <stdlib.h>
 
-// perror
+// perror + strerror
 # include <stdio.h>
-
-// strerror
 # include <string.h>
 
-// INT_MAX
+// INT_MAX, Math, gettimeofday
 # include <limits.h>
+# include <math.h>
+# include <sys/time.h>
 
-// MinilibX
+// MinilibX + Libft
 # include <mlx.h>
-
-// Libft
 # include "libft.h"
 # include "ft_printf.h"
+# include "get_next_line.h"
 
-typedef struct s_data
+// Errors
+# define ERR_CANT_OPEN_FILE 1
+
+// Structs
+
+typedef struct s_img
 {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}			t_data;
+}			t_img;
 
-typedef struct	s_vars {
+typedef struct	s_data {
 	void	*mlx;
 	void	*win;
-	int		frame_count;
-	t_data	img;
-	int		circle_x;
-	int		circle_y;
-}			t_vars;
+	int		width;
+	int		height;
+	t_img	buffer;
+	int		square_x;
+	int		square_y;
+}			t_data;
 
 // Events
 # define DESTROY_EVENT 17
@@ -65,34 +70,36 @@ typedef struct	s_vars {
 
 // Key Values
 # define K_ESC 65307
-# define K_A 10
-# define K_D 20
+# define K_W 119
+# define K_A 97
+# define K_S 115
+# define K_D 100
 
 // Utils
-int		calculate_offset(int x, int y, int line_length, int bits_per_pixel);
-void	buffered_pixel_put(t_data *data, int x, int y, int color);
-
-// Colors
-int	add_shade(double distance, int color);
-int	get_opposite(int color);
+void	buffered_pixel_put(t_img *img, int x, int y, int color);
+void	clear_buffer(t_img *img, int width, int height, int color);
+// // Colors
+// int	add_shade(double distance, int color);
+// int	get_opposite(int color);
 
 // Forms
-void	draw_square(t_data *data, int center_x, int center_y, int radius, int color);
-void	draw_circle(t_data *data, int center_x, int center_y, int radius, int color);
+void	draw_square(t_img *img, int center_x, int center_y, int radius, int color);
+void	draw_circle(t_img *img, int center_x, int center_y, int radius, int color);
 
-// Color Utils
-int	create_trgb(int t, int r, int g, int b);
-int	get_t(int trgb);
-int	get_r(int trgb);
-int	get_g(int trgb);
-int	get_b(int trgb);
+// // Color Utils
+// int	create_trgb(int t, int r, int g, int b);
+// int	get_t(int trgb);
+// int	get_r(int trgb);
+// int	get_g(int trgb);
+// int	get_b(int trgb);
 
 // Hooks
-int	key_handler(int keycode, t_vars *vars);
-int	resize_handler(int event, t_vars *vars);
-int	destroy_handler(t_vars *vars);
-int	mouse_handler(int button, int x, int y, t_vars *vars);
+int	key_handler(int keycode, t_data *data);
+// int	resize_handler(int event, t_vars *vars);
+int	destroy_handler(t_data *data);
+// int	mouse_handler(int button, int x, int y, t_vars *vars);
 
-int render_next_frame(t_vars *vars);
+// Exit
+void	cleanup_and_exit(int status_code);
 
 #endif
