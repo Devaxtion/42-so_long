@@ -21,9 +21,9 @@ LIBFT_SRCS_DIR = $(LIBFT_DIR)/src
 LIBFT_INCS_DIR = $(LIBFT_DIR)/includes
 
 # Minilibx structure
-MLX_DIR = mlx_linux
+MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_DEPENDENCIES = -lXext -lX11 -lm -lz
+MLX_DEPENDENCIES = -lXext -lX11 -lm
 
 # Compiler and flags
 CC = cc
@@ -32,7 +32,7 @@ AR = ar rcs
 RM = rm -f
 
 # Files
-FILES = main utils forms hooks map exit #colors colors_utils
+FILES = main utils forms hooks exit #colors colors_utils
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 OUT_FILE = so_long.out
 

@@ -37,6 +37,13 @@
 // Errors
 # define ERR_CANT_OPEN_FILE 1
 
+// Assets
+# define ASSET_RES 32
+# define FLOOR_FILE "./assets/floor.xpm"
+# define WALL_FILE "./assets/wall.xpm"
+# define PLAYER_FILE "./assets/player.xpm"
+# define COLLECTIBLE_FILE "./assets/collectible.xpm"
+
 // Structs
 
 typedef struct s_img
@@ -48,15 +55,26 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
-typedef struct	s_data {
-	void	*mlx;
-	void	*win;
+typedef struct s_assets
+{
 	int		width;
 	int		height;
-	t_img	buffer;
-	int		square_x;
-	int		square_y;
-}			t_data;
+	void	*floor;
+	// void	*wall;
+	// void	*player;
+	// void	*collectible;
+}			t_assets;
+
+typedef struct	s_data {
+	void		*mlx;
+	void		*win;
+	int			width;
+	int			height;
+	t_img		buffer;
+	int			square_x;
+	int			square_y;
+	t_assets	components;
+}				t_data;
 
 // Events
 # define DESTROY_EVENT 17
