@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/21 13:57:09 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/10/27 11:40:06 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 
 // Errors
 # define ERR_CANT_OPEN_FILE 1
+# define ERR_EMPTY_FILE 2
+# define ERR_MALLOC_FAIL 3
+# define ERR_INVALID_MAP 4
+# define ERR_INVALID_EXTENSION 5
 
 // Assets
 # define ASSET_RES 32
@@ -93,6 +97,12 @@ typedef struct	s_data {
 # define K_S 115
 # define K_D 100
 
+// Map Validation
+int	is_map_valid(char **map, int map_height);
+
+// Map
+char	**parse_map(int argc, char **argv);
+
 // Utils
 void	buffered_pixel_put(t_img *img, int x, int y, int color);
 void	clear_buffer(t_img *img, int width, int height, int color);
@@ -118,6 +128,6 @@ int	destroy_handler(t_data *data);
 // int	mouse_handler(int button, int x, int y, t_vars *vars);
 
 // Exit
-void	cleanup_and_exit(int status_code);
+void	cleanup_and_exit(int status_code, const char *error_msg);
 
 #endif

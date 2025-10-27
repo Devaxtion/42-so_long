@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:42:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/21 13:37:55 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:11:36 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,14 @@ void	parse_components(t_data *data)
 
 // Your program must take a map description file with
 // the extension .ber as a parameter
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_data	data;
+	char	**map;
 
-	// map = parse_map(data);
+	map = parse_map(argc, argv);
+	if (map)
+		ft_printf("Map validated\n");
 
 	// ✅ Initialize the mlx
 	data.mlx = mlx_init();
