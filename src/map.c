@@ -95,10 +95,9 @@ static char	**init_map(char *file_name, int map_height)
 	return (map);
 }
 
-char	**parse_map(int argc, char **argv)
+t_map	parse_map(int argc, char **argv)
 {
-	char	**map;
-	int		map_height;
+	t_map	map;
 
 	if (argc != 2)
 		cleanup_and_exit(0, NULL);
@@ -106,13 +105,15 @@ char	**parse_map(int argc, char **argv)
 	if (!is_valid_extension(argv[1], "ber"))
 		cleanup_and_exit(ERR_INVALID_EXTENSION, "Map file extension isn't .ber");
 
-	map_height = get_line_count(argv[1]);
-	if (map_height == 0)
+	// map = malloc(sizeof(t_map));
+	map.height = get_line_count(argv[1]);
+	if (map.height == 0)
 		cleanup_and_exit(ERR_EMPTY_FILE, "Map file is empty");
 	
-	map = init_map(argv[1], map_height);
+	map.grid = init_map(argv[1], map.height);
+	map.width = ft_strlen(map.grid[0]);
 
-	if (!is_map_valid(map, map_height))
+	if (!is_map_valid(map))
 		cleanup_and_exit(ERR_INVALID_MAP, "Map is invalid");
 	
 	return (map);

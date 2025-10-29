@@ -12,34 +12,37 @@
 
 #include "so_long.h"
 
-// str = "ALALALA"
-// chars = "ALZ"
-static int	has_only_allowed_chars(char *str, char *chars)
+// Just checks if the Width is the same in all lines
+static int	is_map_rectangular(t_map map)
 {
 	int	i;
-	int	j;
-	int	found;
 
 	i = 0;
-	while (str[i])
+	while (i < map.height)
 	{
-		j = 0;
-		found = 0;
-		while (chars[j] && !found)
-		{
-			// ft_printf("str[%i] = %c | chars[%i] = %c\n", i, str[i], j, chars[j]);
-			if (str[i] == chars[j])
-				found = 1;
-			j++;
-		}
-		if (!found)
+		// ft_printf("map.grid[%i] len = %i | map.width = %i\n", i, ft_strlen(map.grid[i]), map.width);
+		if ((int)ft_strlen(map.grid[i]) != map.width)
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int	are_map_elements_valid(char **map, int map_height, int map_weight)
+static int	does_map_only_have_allowed_chars(t_map map)
+{
+	int	i;
+
+	i = 0;
+	while (i < map.height)
+	{
+		if (!has_only_allowed_chars(map.grid[i], "01CEP"))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	are_map_elements_valid(t_map map)
 {
 	int	i;
 	int	j;
@@ -51,78 +54,111 @@ int	are_map_elements_valid(char **map, int map_height, int map_weight)
 	start_count = 0;
 	collectible_count = 0;
 	i = 1;
-	while (i < map_height - 1)
+	while (i < map.height - 1)
 	{
 		j = 0;
-		while (j < map_weight - 1)
+		while (j < map.width - 1)
 		{
-			if (map[i][j] == 'E')
+			if (map.grid[i][j] == 'E')
 				exit_count++;
-			if (map[i][j] == 'P')
+			if (map.grid[i][j] == 'P')
 				start_count++;
-			if (map[i][j] =='C')
+			if (map.grid[i][j] =='C')
 				collectible_count++;
 			j++;
 		}
 		i++;
 	}
-	ft_printf("e = %i, s = %i, c = %i\n", exit_count, start_count, collectible_count);
+	//ft_printf("e = %i, s = %i, c = %i\n", exit_count, start_count, collectible_count);
 	if (exit_count != 1 || start_count != 1 || collectible_count == 0)
 		return (0);
 	return (1);
 }
 
-static int	is_map_rectangular(char **map, int map_height, int map_weight)
+static int	is_map_surrounded_by_walls(t_map map)
 {
 	int	i;
 
-	i = 1;
-	while (i < map_height)
+	i = 0;
+	while (i < map.height)
 	{
-		// ft_printf("map[%i] len = %i | map_weight = %i\n", i, ft_strlen(map[i]), map_weight);
-		if ((int)ft_strlen(map[i]) != map_weight)
-			return (0);
+		if (i == 0 || i == map.height - 1)
+		{
+			if (!has_only_allowed_chars(map.grid[i], "1"))
+				return (0);
+		}
+		else
+		{
+			if (map.grid[i][0] != '1' || map.grid[i][map.width - 1] != '1')
+				return (0);
+		}
 		i++;
 	}
 	return (1);
 }
 
-int	is_map_valid(char **map, int map_height)
-{
-	int	i;
-	int map_weight;
+// static void	ft_dfs(t_map map, int i, int j, char old, char new)
+// {
+// 	if (i < 0 || i >= map.height)
+// 		return ;
+// 	if (j < 0 || j >= map.width)
+// 		return ;
+// 	if (map.grid[i][j] != old) // old
+// 		return;
+// 	map.grid[i][j] = new;
+// 	ft_dfs(map, i + 1, j, old, new);
+// 	ft_dfs(map, i - 1, j, old, new);
+// 	ft_dfs(map, i, j + 1, old, new);
+// 	ft_dfs(map, i, j - 1, old, new);
+// }
 
-	map_weight = ft_strlen(map[0]);
+// void	flood_fill(char **grid, int grid_height, int grid_width, int i, int j, char new)
+// {
+// 	char	old;
+
+// 	old = grid[i][j];
+// 	if (old == new)
+// 		return ;
+// 	dfs(grid, grid_height, grid_width, i, j, old, new);
+// }
+
+// static int	map_has_valid_path(t_map map)
+// {
+// 	t_map map_clone;
+
+// 	map_clone = clone_map(map);
+
+// 	return (1);
+// }
+
+int	is_map_valid(t_map map)
+{
+	ft_printf("Validating map...\n");
 
 	// Map must be rectangular
-	if (!is_map_rectangular(map, map_height, map_weight))
+	if (!is_map_rectangular(map))
 		return (0);
-	
-	ft_printf("Map is rectangular\n");
+	ft_printf("- Map is rectangular\n");
 
 	// Only must countain the chars 01CEP
-	i = 0;
-	while (i < map_height)
-	{
-		if (!has_only_allowed_chars(map[i], "01CEP"))
-			return (0);
-		i++;
-	}
-
-	ft_printf("Map only contains chars 01CEP\n");
+	if (!does_map_only_have_allowed_chars(map))
+		return (0);
+	ft_printf("- Map only contains chars 01CEP\n");
 
 	// Must contain 1 exit, 1 starting position and atleast 1 collectible
-	if (!are_map_elements_valid(map, map_height, map_weight))
+	if (!are_map_elements_valid(map))
 		return (0);
+	ft_printf("- Map elements are valid\n");
 
-	ft_printf("Map only contains 1 exit, 1 start position and 1c\n");
-
-	// Map be surrounded by walls/1
+	// Map be surrounded by walls
+	if (!is_map_surrounded_by_walls(map))
+		return (0);
+	ft_printf("- Map is surrounded by walls\n");
 
 	// Must there be a valid path
+	// if (!map_has_valid_path(map))
+	// 	return (0);
+	ft_printf("- Map has a valid path\n");
 
-	// Other errors, error
-	if (map)
-		return (1);
-	return (0);
+	return (1);
 }

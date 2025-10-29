@@ -69,6 +69,13 @@ typedef struct s_assets
 	// void	*collectible;
 }			t_assets;
 
+typedef struct s_map
+{
+	char	**grid;
+	int		height;
+	int		width;
+}			t_map;
+
 typedef struct	s_data {
 	void		*mlx;
 	void		*win;
@@ -98,14 +105,16 @@ typedef struct	s_data {
 # define K_D 100
 
 // Map Validation
-int	is_map_valid(char **map, int map_height);
+int		is_map_valid(t_map map);
 
 // Map
-char	**parse_map(int argc, char **argv);
+t_map	parse_map(int argc, char **argv);
 
 // Utils
 void	buffered_pixel_put(t_img *img, int x, int y, int color);
 void	clear_buffer(t_img *img, int width, int height, int color);
+int		has_only_allowed_chars(char *str, char *chars);
+
 // // Colors
 // int	add_shade(double distance, int color);
 // int	get_opposite(int color);

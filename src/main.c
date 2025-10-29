@@ -71,10 +71,10 @@ void	parse_components(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	char	**map;
+	t_map	map;
 
 	map = parse_map(argc, argv);
-	if (map)
+	if (map.grid)
 		ft_printf("Map validated\n");
 
 	// ✅ Initialize the mlx
