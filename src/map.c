@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:32:48 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/27 12:58:18 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:19:55 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,12 @@ t_map	parse_map(int argc, char **argv)
 	
 	map.grid = init_map(argv[1], map.height);
 	map.width = ft_strlen(map.grid[0]);
+
+	map.player_x = 1;
+	map.player_y = 3;
+	map.collectible_count = 1;
+	map.collected_count = 0;
+	map.moves = 0;
 
 	if (!is_map_valid(map))
 		cleanup_and_exit(ERR_INVALID_MAP, "Map is invalid");

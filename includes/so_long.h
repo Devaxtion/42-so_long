@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/27 11:40:06 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:19:51 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@
 # define ERR_INVALID_EXTENSION 5
 
 // Assets
-# define ASSET_RES 32
 # define FLOOR_FILE "./assets/floor.xpm"
 # define WALL_FILE "./assets/wall.xpm"
 # define PLAYER_FILE "./assets/player.xpm"
 # define COLLECTIBLE_FILE "./assets/collectible.xpm"
+# define EXIT_FILE "./assets/exit.xpm"
 
 // Structs
 
@@ -64,9 +64,10 @@ typedef struct s_assets
 	int		width;
 	int		height;
 	void	*floor;
-	// void	*wall;
-	// void	*player;
-	// void	*collectible;
+	void	*wall;
+	void	*player;
+	void	*collectible;
+	void	*exit;
 }			t_assets;
 
 typedef struct s_map
@@ -74,6 +75,11 @@ typedef struct s_map
 	char	**grid;
 	int		height;
 	int		width;
+	int		player_x; // 1
+	int		player_y; // 3
+	int		collectible_count;
+	int		collected_count;
+	int		moves;
 }			t_map;
 
 typedef struct	s_data {
@@ -82,9 +88,8 @@ typedef struct	s_data {
 	int			width;
 	int			height;
 	t_img		buffer;
-	int			square_x;
-	int			square_y;
 	t_assets	components;
+	t_map		map;
 }				t_data;
 
 // Events
@@ -115,20 +120,12 @@ void	buffered_pixel_put(t_img *img, int x, int y, int color);
 void	clear_buffer(t_img *img, int width, int height, int color);
 int		has_only_allowed_chars(char *str, char *chars);
 
-// // Colors
-// int	add_shade(double distance, int color);
-// int	get_opposite(int color);
-
 // Forms
 void	draw_square(t_img *img, int center_x, int center_y, int radius, int color);
 void	draw_circle(t_img *img, int center_x, int center_y, int radius, int color);
 
-// // Color Utils
-// int	create_trgb(int t, int r, int g, int b);
-// int	get_t(int trgb);
-// int	get_r(int trgb);
-// int	get_g(int trgb);
-// int	get_b(int trgb);
+// Render
+int	game(t_data *data);
 
 // Hooks
 int	key_handler(int keycode, t_data *data);
