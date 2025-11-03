@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 13:50:36 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 14:27:39 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int	key_handler(int keycode, t_data *data);
 int	destroy_handler(t_data *data);
 
 // Exit
+void	free_map(t_map *map);
 void	cleanup_and_exit(int status_code, const char *error_msg);
 
 #endif

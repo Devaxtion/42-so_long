@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:34:26 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 13:54:12 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 14:45:36 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,39 +104,81 @@ static int	is_map_surrounded_by_walls(t_map map)
 	return (1);
 }
 
-// static void	ft_dfs(t_map map, int i, int j, char old, char new)
-// {
-// 	if (i < 0 || i >= map.height)
-// 		return ;
-// 	if (j < 0 || j >= map.width)
-// 		return ;
-// 	if (map.grid[i][j] != old) // old
-// 		return;
-// 	map.grid[i][j] = new;
-// 	ft_dfs(map, i + 1, j, old, new);
-// 	ft_dfs(map, i - 1, j, old, new);
-// 	ft_dfs(map, i, j + 1, old, new);
-// 	ft_dfs(map, i, j - 1, old, new);
-// }
+static void	ft_flood_fill(t_map map, int i, int j, int mark)
+{
+	char	forbidden;
 
-// void	flood_fill(char **grid, int grid_height, int grid_width, int i, int j, char new)
-// {
-// 	char	old;
+	forbidden = WALL;
+	if (i < 0 || i >= map.height)
+		return ;
+	if (j < 0 || j >= map.width)
+		return ;
+	if (map.grid[i][j] == forbidden || map.grid[i][j] == mark)
+		return;
+	map.grid[i][j] = mark;
+	ft_flood_fill(map, i + 1, j, mark);
+	ft_flood_fill(map, i - 1, j, mark);
+	ft_flood_fill(map, i, j + 1, mark);
+	ft_flood_fill(map, i, j - 1, mark);
+}
 
-// 	old = grid[i][j];
-// 	if (old == new)
-// 		return ;
-// 	dfs(grid, grid_height, grid_width, i, j, old, new);
-// }
+static t_map	clone_map(t_map src)
+{
+	t_map	dst;
+	int		i;
 
-// static int	map_has_valid_path(t_map map)
-// {
-// 	t_map map_clone;
+	dst.height = src.height;
+	dst.width = src.width;
+	dst.collectibles = src.collectibles;
+	dst.player = src.player;
+	dst.grid = (char **)malloc(sizeof(char *) * (dst.height + 1));
+	if (!dst.grid)
+		cleanup_and_exit(ERR_MALLOC_FAIL, "Failed to allocate map clone");
+	i = 0;
+	while (i < dst.height)
+	{
+		dst.grid[i] = ft_strdup(src.grid[i]);
+		if (!dst.grid[i])
+		{
+			/* cleanup partially allocated clone then exit */
+			while (--i >= 0)
+				free(dst.grid[i]);
+			free(dst.grid);
+			cleanup_and_exit(ERR_MALLOC_FAIL, "Failed to allocate map clone");
+		}
+		i++;
+	}
+	dst.grid[dst.height] = NULL;
+	return (dst);
+}
 
-// 	map_clone = clone_map(map);
+static int	map_has_valid_path(t_map map)
+{
+	t_map	map_clone;
+	int		i;
+	int		j;
+	char	mark;
 
-// 	return (1);
-// }
+	map_clone = clone_map(map);
+	mark = '-';
+	ft_flood_fill(map_clone, map_clone.player.col, map_clone.player.row, mark);
+	i = 0;
+	while (i < map.height)
+	{
+		j = 0;
+		while (j < map.width)
+		{
+			if (map.grid[i][j] == EXIT || map.grid[i][j] == COLLECTIBLE)
+			{
+				if (map_clone.grid[i][j] != mark)
+					return (free_map(&map_clone), 0);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (free_map(&map_clone), 1);
+}
 
 int	is_map_valid(t_map map)
 {
@@ -163,8 +205,8 @@ int	is_map_valid(t_map map)
 	ft_printf("- Map is surrounded by walls\n");
 
 	// Must there be a valid path
-	// if (!map_has_valid_path(map))
-	// 	return (0);
+	if (!map_has_valid_path(map))
+		return (0);
 	ft_printf("- Map has a valid path\n");
 
 	return (1);
