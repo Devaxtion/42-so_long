@@ -6,13 +6,13 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:05:44 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 13:51:41 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 15:04:23 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	move_player(t_data *data, int keycode)
+static int	move_player(t_data *data, int keycode)
 {
 	int	x_new;
 	int	y_new;
@@ -65,7 +65,7 @@ int	key_handler(int keycode, t_data *data)
 	int	code;
 
 	code = 0;
-	ft_printf("Keycode received: %d\n", keycode);
+	// ft_printf("Keycode received: %d\n", keycode);
 	if (keycode == K_ESC)
 	{
 		mlx_destroy_window(data->mlx, data->win);

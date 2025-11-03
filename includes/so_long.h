@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 14:27:39 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 15:02:45 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,9 @@ typedef struct	s_data {
 	t_map		map;
 }				t_data;
 
-// Events
+// Events & Masks
 # define DESTROY_EVENT 17
-# define K_PRESS_EVENT 2
-# define CONFIG_REQ_EVENT 22
-
-// Masks
 # define NO_MASK 0L
-# define K_PRESS_MASK (1L << 0)
-# define STRUCT_NOTIFY_MASK (1L << 17)
 
 // Key Values
 # define K_ESC 65307
@@ -128,16 +122,18 @@ int		is_map_valid(t_map map);
 t_map	parse_map(int argc, char **argv);
 
 // Utils
-void	buffered_pixel_put(t_img *img, int x, int y, int color);
-void	clear_buffer(t_img *img, int width, int height, int color);
 int		has_only_allowed_chars(char *str, char *chars);
+void	strtrim_newline(char *s);
+int		is_valid_extension(char *filename, char *extension);
+int		get_line_count(char *file_name);
 
 // Render
-int	draw_elements(t_data *data);
+void	clear_buffer(t_img *img, int width, int height, int color);
+int		draw_elements(t_data *data);
 
 // Events
-int	key_handler(int keycode, t_data *data);
-int	destroy_handler(t_data *data);
+int		key_handler(int keycode, t_data *data);
+int		destroy_handler(t_data *data);
 
 // Exit
 void	free_map(t_map *map);

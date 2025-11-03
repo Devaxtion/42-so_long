@@ -6,33 +6,11 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 13:23:39 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/21 12:19:56 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 14:59:31 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static int	calculate_offset(int x, int y, int line_length, int bits_per_pixel)
-{
-	return (y * line_length + x * (bits_per_pixel / 8));
-}
-
-void	buffered_pixel_put(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + calculate_offset(x, y, img->line_length, img->bits_per_pixel);
-	*(unsigned int*)dst = color;
-}
-
-void	clear_buffer(t_img *img, int width, int height, int color)
-{
-	for (int y = 0; y < height; y++)
-	{
-		for (int x = 0; x < width; x++)
-			buffered_pixel_put(img, x, y, color);
-	}
-}
 
 int	has_only_allowed_chars(char *str, char *chars)
 {
@@ -47,7 +25,6 @@ int	has_only_allowed_chars(char *str, char *chars)
 		found = 0;
 		while (chars[j] && !found)
 		{
-			// ft_printf("str[%i] = %c | chars[%i] = %c\n", i, str[i], j, chars[j]);
 			if (str[i] == chars[j])
 				found = 1;
 			j++;
@@ -59,46 +36,58 @@ int	has_only_allowed_chars(char *str, char *chars)
 	return (1);
 }
 
-// void	dfs(char **grid, int grid_height, int grid_width, int i, int j, char old, char new)
-// {
-// 	if (i < 0 || i >= grid_height)
-// 		return ;
-// 	if (j < 0 || j >= grid_width)
-// 		return ;
-// 	if (grid[i][j] != old)
-// 		return;
-// 	grid[i][j] = new;
-// 	ft_dfs(grid, grid_height, grid_width, i + 1, j, old, new);
-// 	ft_dfs(grid, grid_height, grid_width, i - 1, j, old, new);
-// 	ft_dfs(grid, grid_height, grid_width, i, j + 1, old, new);
-// 	ft_dfs(grid, grid_height, grid_width, i, j - 1, old, new);
-// }
+void strtrim_newline(char *s)
+{
+    int len;
 
-// void	flood_fill(char **grid, int grid_height, int grid_width, int i, int j, char new)
-// {
-// 	char	old;
+    if (!s)
+        return;
+    
+    len = ft_strlen(s);
+    // Check if the last character is a newline
+    if (len > 0 && s[len - 1] == '\n')
+    {
+        // Replace the newline with a null terminator
+        s[len - 1] = '\0';
+    }
+}
 
-// 	old = grid[i][j];
-// 	if (old == new)
-// 		return ;
-// 	dfs(grid, grid_height, grid_width, i, j, old, new);
-// }
+int	is_valid_extension(char *filename, char *extension)
+{
+	int		filename_len;
+	int		extension_len;
+	char	*extension_idx;
 
-// t_map clone_map(t_map src)
-// {
-// 	t_map dst;
-// 	int	i;
+	extension_len = ft_strlen(extension);
 
-// 	dst = malloc(sizeof(t_map));
+	filename_len = ft_strlen(filename);
+	if (filename_len < extension_len + 2)
+		return (0);
 
-// 	dst.height = src.height;
-// 	dst.widht = src.widht;
-// 	dst.grid = (char **)malloc(sizeof(char *) * (dst.height + 1));
-// 	i = 0;
-// 	while (i < dst.height)
-// 	{
-// 		ft_strcpy(dst.grid[i], src.grid[i]);
-// 		i++;
-// 	}
-// 	return (dst);
-// }
+	extension_idx = ft_strnstr(filename, extension, filename_len);
+
+	if (extension_idx == NULL)
+		return (0);
+	if ((extension_idx - filename) == (filename_len - (extension_len + 1)))
+		return (0);
+	return (1);
+}
+
+int	get_line_count(char *file_name)
+{
+	int		fd;
+	char	*line;
+	int		line_count;
+
+	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
+		cleanup_and_exit(ERR_CANT_OPEN_FILE, "Couldn't open the file");
+	line_count = 0;
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		line_count++;
+		free(line);
+	}
+	close(fd);
+	return (line_count);
+}
