@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 11:54:19 by leramos-          #+#    #+#              #
-#    Updated: 2025/10/30 13:43:40 by leramos-         ###   ########.fr        #
+#    Updated: 2025/11/03 13:25:17 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ AR = ar rcs
 RM = rm -f
 
 # Files
-FILES = main render utils forms hooks exit map_validation map
+FILES = main render utils events exit map_validation map_parsing
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 OUT_FILE = so_long.out
 

@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:34:26 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/27 12:58:38 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:54:12 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,18 @@ static int	is_map_rectangular(t_map map)
 static int	does_map_only_have_allowed_chars(t_map map)
 {
 	int	i;
+	char allowed_chars[6];
 
+	allowed_chars[0] = WALL;
+	allowed_chars[1] = FLOOR;
+	allowed_chars[2] = PLAYER;
+	allowed_chars[3] = COLLECTIBLE;
+	allowed_chars[4] = EXIT;
+	allowed_chars[5] = '\0';
 	i = 0;
 	while (i < map.height)
 	{
-		if (!has_only_allowed_chars(map.grid[i], "01CEP"))
+		if (!has_only_allowed_chars(map.grid[i], allowed_chars))
 			return (0);
 		i++;
 	}
@@ -47,30 +54,27 @@ static int	are_map_elements_valid(t_map map)
 	int	i;
 	int	j;
 	int exit_count;
-	int	start_count;
-	int	collectible_count;
+	int	player_count;
 
 	exit_count = 0;
-	start_count = 0;
-	collectible_count = 0;
+	player_count = 0;
 	i = 1;
 	while (i < map.height - 1)
 	{
 		j = 0;
 		while (j < map.width - 1)
 		{
-			if (map.grid[i][j] == 'E')
+			if (map.grid[i][j] == EXIT)
 				exit_count++;
-			if (map.grid[i][j] == 'P')
-				start_count++;
-			if (map.grid[i][j] =='C')
-				collectible_count++;
+			if (map.grid[i][j] == PLAYER)
+				player_count++;
 			j++;
 		}
 		i++;
 	}
-	//ft_printf("e = %i, s = %i, c = %i\n", exit_count, start_count, collectible_count);
-	if (exit_count != 1 || start_count != 1 || collectible_count == 0)
+	if (exit_count != 1 || player_count != 1)
+		return (0);
+	if (map.collectibles < 1)
 		return (0);
 	return (1);
 }
@@ -78,18 +82,21 @@ static int	are_map_elements_valid(t_map map)
 static int	is_map_surrounded_by_walls(t_map map)
 {
 	int	i;
+	char allowed_chars[2];
 
+	allowed_chars[0] = WALL;
+	allowed_chars[1] = '\0';
 	i = 0;
 	while (i < map.height)
 	{
 		if (i == 0 || i == map.height - 1)
 		{
-			if (!has_only_allowed_chars(map.grid[i], "1"))
+			if (!has_only_allowed_chars(map.grid[i], allowed_chars))
 				return (0);
 		}
 		else
 		{
-			if (map.grid[i][0] != '1' || map.grid[i][map.width - 1] != '1')
+			if (map.grid[i][0] != WALL || map.grid[i][map.width - 1] != WALL)
 				return (0);
 		}
 		i++;
@@ -140,10 +147,10 @@ int	is_map_valid(t_map map)
 		return (0);
 	ft_printf("- Map is rectangular\n");
 
-	// Only must countain the chars 01CEP
+	// Only must countain the correct chars
 	if (!does_map_only_have_allowed_chars(map))
 		return (0);
-	ft_printf("- Map only contains chars 01CEP\n");
+	ft_printf("- Map only contains chars from elements\n");
 
 	// Must contain 1 exit, 1 starting position and atleast 1 collectible
 	if (!are_map_elements_valid(map))

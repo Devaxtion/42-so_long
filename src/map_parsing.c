@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:32:48 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/30 14:19:55 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:52:21 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,30 @@ static char	**init_map(char *file_name, int map_height)
 	return (map);
 }
 
+static void scan_map_elements(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < map->height - 1)
+	{
+		j = 0;
+		while (j < map->width - 1)
+		{
+			if (map->grid[i][j] == PLAYER)
+			{
+				map->player.col = i;
+				map->player.row = j;
+			}
+			if (map->grid[i][j] == COLLECTIBLE)
+				map->collectibles++;
+			j++;
+		}
+		i++;
+	}
+}
+
 t_map	parse_map(int argc, char **argv)
 {
 	t_map	map;
@@ -113,11 +137,14 @@ t_map	parse_map(int argc, char **argv)
 	map.grid = init_map(argv[1], map.height);
 	map.width = ft_strlen(map.grid[0]);
 
-	map.player_x = 1;
-	map.player_y = 3;
-	map.collectible_count = 1;
-	map.collected_count = 0;
-	map.moves = 0;
+	map.collectibles = 0;
+	scan_map_elements(&map);
+	
+	map.player.collected = 0;
+	map.player.move_count = 0;
+
+	ft_printf("- Player: %i, %i\n", map.player.row, map.player.col);
+	ft_printf("- Collectibles: %i\n", map.collectibles);
 
 	if (!is_map_valid(map))
 		cleanup_and_exit(ERR_INVALID_MAP, "Map is invalid");

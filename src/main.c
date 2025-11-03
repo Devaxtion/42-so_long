@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:42:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/30 14:12:22 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:20:44 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	parse_components(t_data *data)
 	data->components.exit = mlx_xpm_file_to_image(data->mlx, EXIT_FILE, &(data->components.width), &(data->components.height));
 }
 
-// Your program must take a map description file with
-// the extension .ber as a parameter
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -44,7 +42,7 @@ int	main(int argc, char **argv)
 	// ✅ Set the resolution and create the window
 	data.width = data.components.width * data.map.width;
 	data.height = data.components.height * data.map.height;
-	data.win = mlx_new_window(data.mlx, data.width, data.height, "Baza");
+	data.win = mlx_new_window(data.mlx, data.width, data.height, "So Long");
 	ft_printf("Created the window of %ix%i\n", data.width, data.height);
 
 	// ✅ Create image buffer
@@ -58,9 +56,8 @@ int	main(int argc, char **argv)
 
 	// ✅ Hooks
 	mlx_key_hook(data.win, key_handler, &data);
-	//mlx_hook(data.win, CONFIG_REQ_EVENT, STRUCT_NOTIFY_MASK, resize_handler, &data);
 	mlx_hook(data.win, DESTROY_EVENT, NO_MASK, destroy_handler, &data);
 
-	mlx_loop_hook(data.mlx, game, &data);
+	mlx_loop_hook(data.mlx, draw_elements, &data);
 	mlx_loop(data.mlx);
 }

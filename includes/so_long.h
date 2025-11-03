@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/10/30 14:19:51 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:50:36 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,22 @@ typedef struct s_assets
 	void	*exit;
 }			t_assets;
 
+typedef struct s_player
+{
+	int	row;
+	int	col;
+	int	move_count;
+	int	collected;
+}		t_player;
+
 typedef struct s_map
 {
-	char	**grid;
-	int		height;
-	int		width;
-	int		player_x; // 1
-	int		player_y; // 3
-	int		collectible_count;
-	int		collected_count;
-	int		moves;
-}			t_map;
+	char		**grid;
+	int			height;
+	int			width;
+	int			collectibles;
+	t_player	player;
+}				t_map;
 
 typedef struct	s_data {
 	void		*mlx;
@@ -109,10 +114,17 @@ typedef struct	s_data {
 # define K_S 115
 # define K_D 100
 
+// Elements
+# define FLOOR '0'
+# define WALL '1'
+# define PLAYER 'P'
+# define COLLECTIBLE 'C'
+# define EXIT 'E'
+
 // Map Validation
 int		is_map_valid(t_map map);
 
-// Map
+// Map Parsing
 t_map	parse_map(int argc, char **argv);
 
 // Utils
@@ -120,18 +132,12 @@ void	buffered_pixel_put(t_img *img, int x, int y, int color);
 void	clear_buffer(t_img *img, int width, int height, int color);
 int		has_only_allowed_chars(char *str, char *chars);
 
-// Forms
-void	draw_square(t_img *img, int center_x, int center_y, int radius, int color);
-void	draw_circle(t_img *img, int center_x, int center_y, int radius, int color);
-
 // Render
-int	game(t_data *data);
+int	draw_elements(t_data *data);
 
-// Hooks
+// Events
 int	key_handler(int keycode, t_data *data);
-// int	resize_handler(int event, t_vars *vars);
 int	destroy_handler(t_data *data);
-// int	mouse_handler(int button, int x, int y, t_vars *vars);
 
 // Exit
 void	cleanup_and_exit(int status_code, const char *error_msg);
