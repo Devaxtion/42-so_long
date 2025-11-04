@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 15:02:45 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:53:52 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,16 @@
 # include "get_next_line.h"
 
 // Errors
-# define ERR_CANT_OPEN_FILE 1
-# define ERR_EMPTY_FILE 2
-# define ERR_MALLOC_FAIL 3
-# define ERR_INVALID_MAP 4
-# define ERR_INVALID_EXTENSION 5
+# define ERR_INVALID_ARG_COUNT 1
+# define ERR_CANT_OPEN_FILE 2
+# define ERR_EMPTY_FILE 3
+# define ERR_MALLOC_FAIL 4
+# define ERR_INVALID_MAP 5
+# define ERR_INVALID_EXTENSION 6
+# define ERR_CANT_READ_FILE 7
+# define ERR_CANT_INIT_MAP 8
+# define ERR_CANT_READ_IMG 9
+# define ERR_MAP_CLONE_FAIL 10
 
 // Assets
 # define FLOOR_FILE "./assets/floor.xpm"
@@ -115,11 +120,15 @@ typedef struct	s_data {
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 
+// Map Utils
+void	ft_flood_fill(t_map map, int i, int j, int mark);
+t_map	clone_map(t_map src);
+
 // Map Validation
 int		is_map_valid(t_map map);
 
 // Map Parsing
-t_map	parse_map(int argc, char **argv);
+t_map	parse_map(t_data *data, int argc, char **argv);
 
 // Utils
 int		has_only_allowed_chars(char *str, char *chars);
@@ -137,6 +146,6 @@ int		destroy_handler(t_data *data);
 
 // Exit
 void	free_map(t_map *map);
-void	cleanup_and_exit(int status_code, const char *error_msg);
+void	cleanup_and_exit(int status_code, const char *error_msg, t_data *data);
 
 #endif

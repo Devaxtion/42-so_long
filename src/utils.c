@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 13:23:39 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 14:59:31 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:15:06 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,10 @@ int	is_valid_extension(char *filename, char *extension)
 	char	*extension_idx;
 
 	extension_len = ft_strlen(extension);
-
 	filename_len = ft_strlen(filename);
 	if (filename_len < extension_len + 2)
 		return (0);
-
 	extension_idx = ft_strnstr(filename, extension, filename_len);
-
 	if (extension_idx == NULL)
 		return (0);
 	if ((extension_idx - filename) == (filename_len - (extension_len + 1)))
@@ -81,10 +78,13 @@ int	get_line_count(char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		cleanup_and_exit(ERR_CANT_OPEN_FILE, "Couldn't open the file");
+		return (-1);
 	line_count = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
 		line_count++;
 		free(line);
 	}

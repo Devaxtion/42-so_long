@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:05:44 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 15:04:23 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:47:41 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,20 @@ int	key_handler(int keycode, t_data *data)
 	// ft_printf("Keycode received: %d\n", keycode);
 	if (keycode == K_ESC)
 	{
-		mlx_destroy_window(data->mlx, data->win);
-		cleanup_and_exit(0, NULL);
+		ft_printf("Window closed by user. Exiting.\n");
+		cleanup_and_exit(0, NULL, data);
 	}
 	if (keycode == K_A || keycode == K_D || keycode == K_W || keycode == K_S)
 		code = move_player(data, keycode);
 	if (code == 2)
-		cleanup_and_exit(0, NULL);
+	{
+		ft_printf("You won! Congratulations!\n");
+		cleanup_and_exit(0, NULL, data);
+	}
 	if (code == 1)
 	{
 		data->map.player.move_count += 1;
-		ft_printf("Player moved | Count = %i\n", data->map.player.move_count);
+		ft_printf("Player moved -> Count = %i\n", data->map.player.move_count);
 	}
 	return (0);
 }
@@ -86,7 +89,6 @@ int	key_handler(int keycode, t_data *data)
 int	destroy_handler(t_data *data)
 {
 	ft_printf("Window closed by user. Exiting.\n");
-	mlx_destroy_window(data->mlx, data->win);
-	cleanup_and_exit(0, NULL);
+	cleanup_and_exit(0, NULL, data);
 	return (0);
 }

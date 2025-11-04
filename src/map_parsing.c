@@ -6,13 +6,13 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:32:48 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 14:59:01 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:23:11 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static char	**init_map(char *file_name, int map_height)
+static char	**init_grid(char *file_name, int map_height)
 {
 	char	**map;
 	int		fd;
@@ -21,11 +21,11 @@ static char	**init_map(char *file_name, int map_height)
 
 	map = (char **)malloc(sizeof(char *) * (map_height + 1));
 	if (!map)
-		cleanup_and_exit(ERR_MALLOC_FAIL, "Failed to allocate map");
+		return (NULL);
 	
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		cleanup_and_exit(ERR_CANT_OPEN_FILE, "Couldn't open the file");
+		return (NULL);
 
 	i = 0;
 	while ((line = get_next_line(fd)) != NULL)
@@ -44,7 +44,8 @@ static void scan_map_elements(t_map *map)
 	int	i;
 	int	j;
 
-	i = 1;
+	map->collectibles = 0;
+	i = 0;
 	while (i < map->height - 1)
 	{
 		j = 0;
@@ -63,31 +64,30 @@ static void scan_map_elements(t_map *map)
 	}
 }
 
-t_map	parse_map(int argc, char **argv)
+t_map	parse_map(t_data *data, int argc, char **argv)
 {
 	t_map	map;
 
 	if (argc != 2)
-		cleanup_and_exit(0, NULL);
+		cleanup_and_exit(ERR_INVALID_ARG_COUNT, "Invalid argument count", data);
 
 	if (!is_valid_extension(argv[1], "ber"))
-		cleanup_and_exit(ERR_INVALID_EXTENSION, "Map file extension isn't .ber");
+		cleanup_and_exit(ERR_INVALID_EXTENSION, "Map file extension isn't .ber", data);
 
 	map.height = get_line_count(argv[1]);
+	if (map.height == -1)
+		cleanup_and_exit(ERR_CANT_READ_FILE, "Couldn't read file", data);
 	if (map.height == 0)
-		cleanup_and_exit(ERR_EMPTY_FILE, "Map file is empty");
+		cleanup_and_exit(ERR_EMPTY_FILE, "Map is empty", data);
 	
-	map.grid = init_map(argv[1], map.height);
+	map.grid = init_grid(argv[1], map.height);
+	if (!map.grid)
+		cleanup_and_exit(ERR_CANT_INIT_MAP, "Couldn't initialize map", data);
 	map.width = ft_strlen(map.grid[0]);
-
-	map.collectibles = 0;
 	scan_map_elements(&map);
-	
+	if (!is_map_valid(map))
+		cleanup_and_exit(ERR_INVALID_MAP, "Map is invalid", data);
 	map.player.collected = 0;
 	map.player.move_count = 0;
-
-	if (!is_map_valid(map))
-		cleanup_and_exit(ERR_INVALID_MAP, "Map is invalid");
-	
 	return (map);
 }
