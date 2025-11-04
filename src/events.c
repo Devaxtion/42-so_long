@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:05:44 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 13:47:41 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:33:19 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ static int	move_player(t_data *data, int keycode)
 		y_new--;
 	if (keycode == K_S)
 		y_new++;
-	
+
 	if (data->map.grid[y_new][x_new] == WALL)
 		return (0);
-	
+
 	if (data->map.grid[y_new][x_new] == COLLECTIBLE)
 	{
 		data->map.grid[data->map.player.col][data->map.player.row] = FLOOR;
 		data->map.grid[y_new][x_new] = PLAYER;
 		data->map.player.collected++;
 	}
-	
+
 	if (data->map.grid[y_new][x_new] == EXIT)
 	{
 		if (data->map.player.collected < data->map.collectibles)
@@ -45,7 +45,7 @@ static int	move_player(t_data *data, int keycode)
 		data->map.grid[data->map.player.col][data->map.player.row] = FLOOR;
 		return (2);
 	}
-	
+
 	// if 0, just move
 	if (data->map.grid[y_new][x_new] == FLOOR)
 	{

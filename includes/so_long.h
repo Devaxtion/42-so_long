@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 13:53:52 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:40:14 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define ERR_EMPTY_FILE 3
 # define ERR_MALLOC_FAIL 4
 # define ERR_INVALID_MAP 5
-# define ERR_INVALID_EXTENSION 6
+# define ERR_INVALID_EXT 6
 # define ERR_CANT_READ_FILE 7
 # define ERR_CANT_INIT_MAP 8
 # define ERR_CANT_READ_IMG 9
@@ -92,7 +92,8 @@ typedef struct s_map
 	t_player	player;
 }				t_map;
 
-typedef struct	s_data {
+typedef struct s_data
+{
 	void		*mlx;
 	void		*win;
 	int			width;

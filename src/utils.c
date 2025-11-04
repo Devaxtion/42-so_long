@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 13:23:39 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 13:15:06 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:39:37 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ int	has_only_allowed_chars(char *str, char *chars)
 	return (1);
 }
 
-void strtrim_newline(char *s)
+void	strtrim_newline(char *s)
 {
-    int len;
+	int	len;
 
-    if (!s)
-        return;
-    
-    len = ft_strlen(s);
-    // Check if the last character is a newline
-    if (len > 0 && s[len - 1] == '\n')
-    {
-        // Replace the newline with a null terminator
-        s[len - 1] = '\0';
-    }
+	if (!s)
+		return ;
+
+	len = ft_strlen(s);
+	// Check if the last character is a newline
+	if (len > 0 && s[len - 1] == '\n')
+	{
+		// Replace the newline with a null terminator
+		s[len - 1] = '\0';
+	}
 }
 
 int	is_valid_extension(char *filename, char *extension)

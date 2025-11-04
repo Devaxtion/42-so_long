@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 14:03:44 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 14:18:54 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:33:41 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_map(t_map *map)
 	map->grid = NULL;
 }
 
-static void    cleanup_mlx(t_data *data)
+static void	cleanup_mlx(t_data *data)
 {
 	if (!(data->mlx))
 		return ;

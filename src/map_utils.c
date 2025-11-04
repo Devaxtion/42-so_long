@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 13:27:29 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 14:22:06 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:36:44 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_flood_fill(t_map map, int i, int j, int mark)
 	if (j < 0 || j >= map.width)
 		return ;
 	if (map.grid[i][j] == forbidden || map.grid[i][j] == mark)
-		return;
+		return ;
 	map.grid[i][j] = mark;
 	ft_flood_fill(map, i + 1, j, mark);
 	ft_flood_fill(map, i - 1, j, mark);

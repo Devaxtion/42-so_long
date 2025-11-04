@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:34:26 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 14:03:15 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:37:11 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int	is_map_rectangular(t_map map)
 
 static int	does_map_only_have_allowed_chars(t_map map)
 {
-	int	i;
-	char allowed_chars[6];
+	int		i;
+	char	allowed_chars[6];
 
 	allowed_chars[0] = WALL;
 	allowed_chars[1] = FLOOR;
@@ -52,7 +52,7 @@ static int	are_map_elements_valid(t_map map)
 {
 	int	i;
 	int	j;
-	int exit_count;
+	int	exit_count;
 	int	player_count;
 
 	exit_count = 0;
@@ -78,8 +78,8 @@ static int	are_map_elements_valid(t_map map)
 
 static int	is_map_surrounded_by_walls(t_map map)
 {
-	int	i;
-	char allowed_chars[2];
+	int		i;
+	char	allowed_chars[2];
 
 	allowed_chars[0] = WALL;
 	allowed_chars[1] = '\0';

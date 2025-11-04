@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 12:28:09 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/03 15:01:41 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:38:40 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,24 @@ static void	buffered_pixel_put(t_img *img, int x, int y, int color)
 	char	*dst;
 
 	dst = img->addr + calculate_offset(x, y, img->line_length, img->bits_per_pixel);
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 void	clear_buffer(t_img *img, int width, int height, int color)
 {
-	for (int y = 0; y < height; y++)
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < height)
 	{
-		for (int x = 0; x < width; x++)
+		x = 0;
+		while (x < width)
+		{
 			buffered_pixel_put(img, x, y, color);
+			x++;
+		}
+		y++;
 	}
 }
 

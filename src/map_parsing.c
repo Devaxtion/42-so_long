@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:32:48 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 13:23:11 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:36:17 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@ static char	**init_grid(char *file_name, int map_height)
 {
 	char	**map;
 	int		fd;
-	char 	*line;
+	char	*line;
 	int		i;
 
 	map = (char **)malloc(sizeof(char *) * (map_height + 1));
 	if (!map)
 		return (NULL);
-	
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
 
 	i = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
 		strtrim_newline(line);
 		map[i] = line;
 		i++;
@@ -39,7 +41,7 @@ static char	**init_grid(char *file_name, int map_height)
 	return (map);
 }
 
-static void scan_map_elements(t_map *map)
+static void	scan_map_elements(t_map *map)
 {
 	int	i;
 	int	j;
@@ -72,14 +74,14 @@ t_map	parse_map(t_data *data, int argc, char **argv)
 		cleanup_and_exit(ERR_INVALID_ARG_COUNT, "Invalid argument count", data);
 
 	if (!is_valid_extension(argv[1], "ber"))
-		cleanup_and_exit(ERR_INVALID_EXTENSION, "Map file extension isn't .ber", data);
+		cleanup_and_exit(ERR_INVALID_EXT, "File extension isn't ber", data);
 
 	map.height = get_line_count(argv[1]);
 	if (map.height == -1)
 		cleanup_and_exit(ERR_CANT_READ_FILE, "Couldn't read file", data);
 	if (map.height == 0)
 		cleanup_and_exit(ERR_EMPTY_FILE, "Map is empty", data);
-	
+
 	map.grid = init_grid(argv[1], map.height);
 	if (!map.grid)
 		cleanup_and_exit(ERR_CANT_INIT_MAP, "Couldn't initialize map", data);
