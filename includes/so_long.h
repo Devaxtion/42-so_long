@@ -34,6 +34,9 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
+// Game Title
+# define GAME_TITLE "So Long"
+
 // Errors
 # define ERR_INVALID_ARG_COUNT 1
 # define ERR_CANT_OPEN_FILE 2
@@ -121,6 +124,9 @@ typedef struct s_data
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 
+// Components
+void	parse_components(t_data *data);
+
 // Map Utils
 void	ft_flood_fill(t_map map, int i, int j, int mark);
 t_map	clone_map(t_map src);
@@ -133,12 +139,11 @@ t_map	parse_map(t_data *data, int argc, char **argv);
 
 // Utils
 int		has_only_allowed_chars(char *str, char *chars);
-void	strtrim_newline(char *s);
+void	trim_newline(char *str);
 int		is_valid_extension(char *filename, char *extension);
 int		get_line_count(char *file_name);
 
 // Render
-void	clear_buffer(t_img *img, int width, int height, int color);
 int		draw_elements(t_data *data);
 
 // Events

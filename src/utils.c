@@ -36,20 +36,15 @@ int	has_only_allowed_chars(char *str, char *chars)
 	return (1);
 }
 
-void	strtrim_newline(char *s)
+void	trim_newline(char *str)
 {
-	int	len;
+	int	last_char_index;
 
-	if (!s)
+	if (!str)
 		return ;
-
-	len = ft_strlen(s);
-	// Check if the last character is a newline
-	if (len > 0 && s[len - 1] == '\n')
-	{
-		// Replace the newline with a null terminator
-		s[len - 1] = '\0';
-	}
+	last_char_index = ft_strlen(str) - 1;
+	if (str[last_char_index] == '\n')
+		str[last_char_index] = '\0';
 }
 
 int	is_valid_extension(char *filename, char *extension)

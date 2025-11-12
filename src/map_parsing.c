@@ -25,14 +25,13 @@ static char	**init_grid(char *file_name, int map_height)
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-
 	i = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		strtrim_newline(line);
+		trim_newline(line);
 		map[i] = line;
 		i++;
 	}
@@ -72,16 +71,13 @@ t_map	parse_map(t_data *data, int argc, char **argv)
 
 	if (argc != 2)
 		cleanup_and_exit(ERR_INVALID_ARG_COUNT, "Invalid argument count", data);
-
 	if (!is_valid_extension(argv[1], "ber"))
 		cleanup_and_exit(ERR_INVALID_EXT, "File extension isn't ber", data);
-
 	map.height = get_line_count(argv[1]);
 	if (map.height == -1)
 		cleanup_and_exit(ERR_CANT_READ_FILE, "Couldn't read file", data);
 	if (map.height == 0)
 		cleanup_and_exit(ERR_EMPTY_FILE, "Map is empty", data);
-
 	map.grid = init_grid(argv[1], map.height);
 	if (!map.grid)
 		cleanup_and_exit(ERR_CANT_INIT_MAP, "Couldn't initialize map", data);

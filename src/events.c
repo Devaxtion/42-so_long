@@ -21,10 +21,15 @@ static int	is_valid_move(t_data *data, char target)
 	return (1);
 }
 
-static void	update_player_pos(t_data *data, char target, int row_new, int col_new)
+static void	update_player_pos(
+	t_data *data,
+	char target,
+	int row_new,
+	int col_new
+)
 {
 	if (target == COLLECTIBLE)
-			data->map.player.collected++;
+		data->map.player.collected++;
 	data->map.grid[data->map.player.col][data->map.player.row] = FLOOR;
 	data->map.grid[col_new][row_new] = PLAYER;
 	data->map.player.move_count += 1;

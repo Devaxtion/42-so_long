@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   components.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,25 @@
 
 #include "so_long.h"
 
-int	main(int argc, char **argv)
+static void	*load_xpm_img(t_data *data, char *file)
 {
-	t_data	data;
+	void	*component;
+	int		width;
+	int		height;
 
-	data.map = parse_map(&data, argc, argv);
-	data.mlx = mlx_init();
-	parse_components(&data);
+	component = mlx_xpm_file_to_image(data->mlx, file, &width, &height);
+	if (component == NULL)
+		cleanup_and_exit(ERR_CANT_READ_IMG, "Image reading has failed", data);
+	data->components.width = width;
+	data->components.height = height;
+	return (component);
+}
 
-	// TODO: REMOVE USELESS STUFF IN SO_LONG LIKE ERRORS, IMG BUFFER AND OTHERS
-	data.width = data.components.width * data.map.width;
-	data.height = data.components.height * data.map.height;
-	data.win = mlx_new_window(data.mlx, data.width, data.height, GAME_TITLE);
-
-	mlx_key_hook(data.win, key_handler, &data);
-	mlx_hook(data.win, DESTROY_EVENT, NO_MASK, destroy_handler, &data);
-	mlx_loop_hook(data.mlx, draw_elements, &data);
-	mlx_loop(data.mlx);
+void	parse_components(t_data *data)
+{
+	data->components.floor = load_xpm_img(data, FLOOR_FILE);
+	data->components.wall = load_xpm_img(data, WALL_FILE);
+	data->components.player = load_xpm_img(data, PLAYER_FILE);
+	data->components.collectible = load_xpm_img(data, COLLECTIBLE_FILE);
+	data->components.exit = load_xpm_img(data, EXIT_FILE);
 }

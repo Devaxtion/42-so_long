@@ -32,7 +32,7 @@ AR = ar rcs
 RM = rm -f
 
 # Files
-FILES = main render utils events exit map_utils map_validation map_parsing
+FILES = main components render utils events exit map_utils map_validation map_parsing
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 OUT_FILE = so_long.out
 

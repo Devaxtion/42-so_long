@@ -12,16 +12,6 @@
 
 #include "so_long.h"
 
-// static void	free_stack(t_stack *stack)
-// {
-// 	if (stack)
-// 	{
-// 		if (stack->data)
-// 			free(stack->data);
-// 		free(stack);
-// 	}
-// }
-
 void	free_map(t_map *map)
 {
 	int	i;
@@ -63,7 +53,7 @@ static void	cleanup_mlx(t_data *data)
 
 void	cleanup_and_exit(int status_code, const char *error_msg, t_data *data)
 {
-	// free_map(&data->map);
+	free_map(&data->map);
 	cleanup_mlx(data);
 	if (status_code != 0)
 	{

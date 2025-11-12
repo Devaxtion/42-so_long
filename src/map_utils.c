@@ -42,7 +42,6 @@ static char	**clone_grid(char **src, int height)
 		dst[i] = ft_strdup(src[i]);
 		if (!dst[i])
 		{
-			/* cleanup partially allocated clone then exit */
 			while (--i >= 0)
 				free(dst[i]);
 			free(dst);

@@ -12,22 +12,7 @@
 
 #include "so_long.h"
 
-// Just checks if the Width is the same in all lines
-static int	is_map_rectangular(t_map map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map.height)
-	{
-		if ((int)ft_strlen(map.grid[i]) != map.width)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-static int	does_map_only_have_allowed_chars(t_map map)
+static int	is_map_rect_and_allowed_chars(t_map map)
 {
 	int		i;
 	char	allowed_chars[6];
@@ -41,6 +26,8 @@ static int	does_map_only_have_allowed_chars(t_map map)
 	i = 0;
 	while (i < map.height)
 	{
+		if ((int)ft_strlen(map.grid[i]) != map.width)
+			return (0);
 		if (!has_only_allowed_chars(map.grid[i], allowed_chars))
 			return (0);
 		i++;
@@ -129,9 +116,7 @@ static int	map_has_valid_path(t_map map)
 
 int	is_map_valid(t_map map)
 {
-	if (!is_map_rectangular(map))
-		return (0);
-	if (!does_map_only_have_allowed_chars(map))
+	if (!is_map_rect_and_allowed_chars(map))
 		return (0);
 	if (!are_map_elements_valid(map))
 		return (0);
