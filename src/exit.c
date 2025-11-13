@@ -34,8 +34,6 @@ static void	cleanup_mlx(t_data *data)
 		return ;
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
-	if (data->buffer.img)
-		mlx_destroy_image(data->mlx, data->buffer.img);
 	if (data->components.floor)
 		mlx_destroy_image(data->mlx, data->components.floor);
 	if (data->components.wall)

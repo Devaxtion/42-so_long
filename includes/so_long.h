@@ -37,18 +37,6 @@
 // Game Title
 # define GAME_TITLE "So Long"
 
-// Errors
-# define ERR_INVALID_ARG_COUNT 1
-# define ERR_CANT_OPEN_FILE 2
-# define ERR_EMPTY_FILE 3
-# define ERR_MALLOC_FAIL 4
-# define ERR_INVALID_MAP 5
-# define ERR_INVALID_EXT 6
-# define ERR_CANT_READ_FILE 7
-# define ERR_CANT_INIT_MAP 8
-# define ERR_CANT_READ_IMG 9
-# define ERR_MAP_CLONE_FAIL 10
-
 // Assets
 # define FLOOR_FILE "./assets/floor.xpm"
 # define WALL_FILE "./assets/wall.xpm"
@@ -56,16 +44,34 @@
 # define COLLECTIBLE_FILE "./assets/collectible.xpm"
 # define EXIT_FILE "./assets/exit.xpm"
 
-// Structs
+// Elements
+# define FLOOR '0'
+# define WALL '1'
+# define PLAYER 'P'
+# define COLLECTIBLE 'C'
+# define EXIT 'E'
 
-typedef struct s_img
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_img;
+// Errors
+# define ERR_INVALID_ARG_COUNT 1
+# define ERR_EMPTY_FILE 2
+# define ERR_INVALID_MAP 3
+# define ERR_INVALID_EXT 4
+# define ERR_CANT_READ_FILE 5
+# define ERR_CANT_INIT_MAP 6
+# define ERR_CANT_READ_IMG 7
+
+// Events & Masks
+# define DESTROY_EVENT 17
+# define NO_MASK 0L
+
+// Key Values
+# define K_ESC 65307
+# define K_W 119
+# define K_A 97
+# define K_S 115
+# define K_D 100
+
+// Structs
 
 typedef struct s_assets
 {
@@ -101,28 +107,9 @@ typedef struct s_data
 	void		*win;
 	int			width;
 	int			height;
-	t_img		buffer;
 	t_assets	components;
 	t_map		map;
 }				t_data;
-
-// Events & Masks
-# define DESTROY_EVENT 17
-# define NO_MASK 0L
-
-// Key Values
-# define K_ESC 65307
-# define K_W 119
-# define K_A 97
-# define K_S 115
-# define K_D 100
-
-// Elements
-# define FLOOR '0'
-# define WALL '1'
-# define PLAYER 'P'
-# define COLLECTIBLE 'C'
-# define EXIT 'E'
 
 // Components
 void	parse_components(t_data *data);

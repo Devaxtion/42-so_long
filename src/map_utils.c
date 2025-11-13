@@ -36,6 +36,8 @@ static char	**clone_grid(char **src, int height)
 	int		i;
 
 	dst = (char **)malloc(sizeof(char *) * (height + 1));
+	if (!dst)
+		return (NULL);
 	i = 0;
 	while (i < height)
 	{
