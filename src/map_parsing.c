@@ -12,15 +12,15 @@
 
 #include "so_long.h"
 
-static char	**init_grid(char *file_name, int map_height)
+static char	**init_grid(char *file_name, int grid_height)
 {
-	char	**map;
+	char	**grid;
 	int		fd;
 	char	*line;
 	int		i;
 
-	map = (char **)malloc(sizeof(char *) * (map_height + 1));
-	if (!map)
+	grid = (char **)malloc(sizeof(char *) * (grid_height + 1));
+	if (!grid)
 		return (NULL);
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
@@ -32,12 +32,12 @@ static char	**init_grid(char *file_name, int map_height)
 		if (line == NULL)
 			break ;
 		trim_newline(line);
-		map[i] = line;
+		grid[i] = line;
 		i++;
 	}
-	map[i] = NULL;
+	grid[i] = NULL;
 	close(fd);
-	return (map);
+	return (grid);
 }
 
 static void	scan_map_elements(t_map *map)

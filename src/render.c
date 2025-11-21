@@ -39,11 +39,11 @@ int	draw_elements(t_data *data)
 	i = 0;
 	while (i < data->map.height)
 	{
-		y = i * data->components.width;
+		y = i * data->components.height;
 		j = 0;
 		while (j < data->map.width)
 		{
-			x = j * data->components.height;
+			x = j * data->components.width;
 			draw_cell(data, data->map.grid[i][j], x, y);
 			j++;
 		}
