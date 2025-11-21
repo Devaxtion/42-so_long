@@ -14,21 +14,19 @@
 
 static void	draw_cell(t_data *data, char element, int x, int y)
 {
+	void	*component;
+
 	if (element == FLOOR)
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->components.floor, x, y);
+		component = data->components.floor;
 	if (element == WALL)
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->components.wall, x, y);
+		component = data->components.wall;
 	if (element == PLAYER)
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->components.player, x, y);
+		component = data->components.player;
 	if (element == COLLECTIBLE)
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->components.collectible, x, y);
+		component = data->components.collectible;
 	if (element == EXIT)
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->components.exit, x, y);
+		component = data->components.exit;
+	mlx_put_image_to_window(data->mlx, data->win, component, x, y);
 }
 
 int	draw_elements(t_data *data)
