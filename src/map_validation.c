@@ -97,7 +97,7 @@ static int	map_has_valid_path(t_map map)
 	map_clone = clone_map(map);
 	if (!map_clone.grid)
 		return (0);
-	ft_flood_fill(map_clone, map_clone.player.col, map_clone.player.row, '-');
+	ft_flood_fill(map_clone, map_clone.player.y, map_clone.player.x, '-');
 	i = 0;
 	while (i < map.height)
 	{

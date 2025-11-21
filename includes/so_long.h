@@ -86,8 +86,8 @@ typedef struct s_assets
 
 typedef struct s_player
 {
-	int	row;
-	int	col;
+	int	x;
+	int	y;
 	int	move_count;
 	int	collected;
 }		t_player;

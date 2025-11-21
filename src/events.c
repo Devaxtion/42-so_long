@@ -24,41 +24,41 @@ static int	is_valid_move(t_data *data, char target)
 static void	update_player_pos(
 	t_data *data,
 	char target,
-	int row_new,
-	int col_new
+	int x_new,
+	int y_new
 )
 {
 	if (target == COLLECTIBLE)
 		data->map.player.collected++;
-	data->map.grid[data->map.player.col][data->map.player.row] = FLOOR;
-	data->map.grid[col_new][row_new] = PLAYER;
+	data->map.grid[data->map.player.y][data->map.player.x] = FLOOR;
+	data->map.grid[y_new][x_new] = PLAYER;
 	data->map.player.move_count += 1;
-	data->map.player.row = row_new;
-	data->map.player.col = col_new;
+	data->map.player.x = x_new;
+	data->map.player.y = y_new;
 }
 
 static int	move_player(t_data *data, int keycode)
 {
-	int		row_new;
-	int		col_new;
+	int		x_new;
+	int		y_new;
 	char	target;
 
-	row_new = data->map.player.row;
-	col_new = data->map.player.col;
+	x_new = data->map.player.x;
+	y_new = data->map.player.y;
 	if (keycode == K_A)
-		row_new--;
+		x_new--;
 	else if (keycode == K_D)
-		row_new++;
+		x_new++;
 	else if (keycode == K_W)
-		col_new--;
+		y_new--;
 	else if (keycode == K_S)
-		col_new++;
+		y_new++;
 	else
 		return (0);
-	target = data->map.grid[col_new][row_new];
+	target = data->map.grid[y_new][x_new];
 	if (!is_valid_move(data, target))
 		return (0);
-	update_player_pos(data, target, row_new, col_new);
+	update_player_pos(data, target, x_new, y_new);
 	if (target == EXIT)
 		return (2);
 	if (target == FLOOR || target == COLLECTIBLE)

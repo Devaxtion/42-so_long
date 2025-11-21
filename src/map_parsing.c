@@ -54,8 +54,8 @@ static void	scan_map_elements(t_map *map)
 		{
 			if (map->grid[i][j] == PLAYER)
 			{
-				map->player.col = i;
-				map->player.row = j;
+				map->player.x = j;
+				map->player.y = i;
 			}
 			if (map->grid[i][j] == COLLECTIBLE)
 				map->collectibles++;
