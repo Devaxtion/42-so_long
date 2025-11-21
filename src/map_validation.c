@@ -45,10 +45,10 @@ static int	are_map_elements_valid(t_map map)
 	exit_count = 0;
 	player_count = 0;
 	i = 1;
-	while (i < map.height - 1)
+	while (i < map.height)
 	{
 		j = 0;
-		while (j < map.width - 1)
+		while (j < map.width)
 		{
 			if (map.grid[i][j] == EXIT)
 				exit_count++;
