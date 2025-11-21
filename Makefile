@@ -20,7 +20,7 @@ LIBFT_DIR = libft
 LIBFT_SRCS_DIR = $(LIBFT_DIR)/src
 LIBFT_INCS_DIR = $(LIBFT_DIR)/includes
 
-# Minilibx structure
+# MiniLibX structure
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_DEPENDENCIES = -lXext -lX11 -lm
@@ -34,7 +34,6 @@ RM = rm -f
 # Files
 FILES = main components render utils events exit map_utils map_validation map_parsing
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
-OUT_FILE = so_long.out
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS = $(SRCS:.c=.o)
@@ -49,8 +48,8 @@ $(MLX_LIB):
 	@make -C $(MLX_DIR)
 
 $(NAME): $(OBJS) $(LIBFT_LIB) $(MLX_LIB)
-# $(CC) $(CFLAGS) $^ -o $(OUT_FILE)
-	$(CC) $(CFLAGS) $^ -L$(MLX_DIR) $(MLX_DEPENDENCIES) -o $(OUT_FILE)
+# $(CC) $(CFLAGS) $^ -o $(NAME)
+	$(CC) $(CFLAGS) $^ -L$(MLX_DIR) $(MLX_DEPENDENCIES) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
