@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 11:54:19 by leramos-          #+#    #+#              #
-#    Updated: 2025/11/04 13:29:07 by leramos-         ###   ########.fr        #
+#    Updated: 2025/11/24 13:20:45 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,6 @@ $(NAME): $(OBJS) $(LIBFT_LIB) $(MLX_LIB)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-# Add -03 or -02 and maybe -I/usr/include
 
 clean:
 	@make -C $(LIBFT_DIR) clean
