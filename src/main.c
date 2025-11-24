@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:42:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/24 13:18:34 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/24 15:01:30 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	ft_memset(&data, 0, sizeof(data));
-	data.map = parse_map(&data, argc, argv);
+	parse_map(&data, argc, argv);
 	data.mlx = mlx_init();
 	parse_components(&data);
 	data.width = data.components.width * data.map.width;

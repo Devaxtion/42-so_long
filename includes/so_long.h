@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:37:08 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 14:40:14 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/24 15:01:24 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,11 @@ typedef struct s_data
 	t_map		map;
 }				t_data;
 
-// Components
-void	parse_components(t_data *data);
+// Utils
+int		has_only_allowed_chars(char *str, char *chars);
+void	trim_newline(char *str);
+int		is_valid_extension(char *filename, char *extension);
+int		get_line_count(char *file_name);
 
 // Map Utils
 void	ft_flood_fill(t_map map, int i, int j, int mark);
@@ -122,13 +125,10 @@ t_map	clone_map(t_map src);
 int		is_map_valid(t_map map);
 
 // Map Parsing
-t_map	parse_map(t_data *data, int argc, char **argv);
+void	parse_map(t_data *data, int argc, char **argv);
 
-// Utils
-int		has_only_allowed_chars(char *str, char *chars);
-void	trim_newline(char *str);
-int		is_valid_extension(char *filename, char *extension);
-int		get_line_count(char *file_name);
+// Components
+void	parse_components(t_data *data);
 
 // Render
 int		draw_elements(t_data *data);

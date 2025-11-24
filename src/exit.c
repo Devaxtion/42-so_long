@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 14:03:44 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/04 14:33:41 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:50:28 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_map(t_map *map)
 	while (i < map->height)
 	{
 		free(map->grid[i]);
+		map->grid[i] = NULL;
 		i++;
 	}
 	free(map->grid);
