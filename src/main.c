@@ -22,8 +22,8 @@ int	main(int argc, char **argv)
 	data.width = data.components.width * data.map.width;
 	data.height = data.components.height * data.map.height;
 	data.win = mlx_new_window(data.mlx, data.width, data.height, GAME_TITLE);
-	mlx_key_hook(data.win, key_handler, &data);
 	mlx_hook(data.win, DESTROY_EVENT, NO_MASK, destroy_handler, &data);
+	mlx_key_hook(data.win, key_handler, &data);
 	mlx_loop_hook(data.mlx, draw_elements, &data);
 	mlx_loop(data.mlx);
 }
